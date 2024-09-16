@@ -106,13 +106,5 @@ _**Results:**_
 After training the model for 3 epochs, we evaluate its performance using
 the ROUGE metric.
 
-The results are as follows:
-
-● ROUGE-1 Score: (value)
-
-● ROUGE-2 Score: (value)
-
-● ROUGE-3 Score: (value)
-
-These scores indicate the model's ability to generate summaries that are
+Scores indicate the model's ability to generate summaries that are
 similar to the reference summaries in terms of n-gram overlay.
