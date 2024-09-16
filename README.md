@@ -103,8 +103,17 @@ the overlap between the generated summaries and the reference summaries.
 
 _**Results:**_
 
-After training the model for 3 epochs, we evaluate its performance using
-the ROUGE metric.
+After training the model for 2 epochs, we evaluate its performance using the
+rouge metric for the 50th entry of test data. 
+The input_text given is the ‘text’ of dataset[‘test’][50].
 
-Scores indicate the model's ability to generate summaries that are
+The results are as follows:
+
+● ROUGE-1 Score: 0.23815098039215686
+
+● ROUGE-2 Score: 0.05604331811023622
+
+● ROUGE-3 Score: 0.1546758823529412
+
+These scores indicate the model's ability to generate summaries that are
 similar to the reference summaries in terms of n-gram overlay.
