@@ -1,6 +1,6 @@
 # Summarization NLP
 
-**Summarization NLP** is a cutting-edge natural language processing (NLP) project designed to generate concise and coherent summaries from extensive textual data. Leveraging advanced machine learning algorithms and state-of-the-art deep learning architectures, this project aims to facilitate efficient information digestion, enabling users to grasp key insights swiftly.
+This project is  designed to generate concise and coherent summaries from extensive textual data. Leveraging advanced machine learning algorithms and state-of-the-art deep learning architectures, this project aims to facilitate efficient information digestion, enabling users to grasp key insights swiftly.
 
 ---
 
