@@ -108,10 +108,16 @@ This project employs the **T5 (Text-to-Text Transfer Transformer)**, a versatile
 
 ### Performance Metrics
 
-1. **ROUGE Scores**:
-   - **ROUGE-1**: Measures the overlap of unigrams between the generated summary and the reference summary.
-   - **ROUGE-2**: Measures the overlap of bigrams.
-   - **ROUGE-L**: Measures the longest common subsequence between the generated summary and the reference summary.
+ **ROUGE Scores** : 
+   
+   Rouge1 : 0.23815098039215686
+
+   Rouge2 : 0.05604331811023622
+
+   RougeL : 0.12156862745098039
+
+   RougeLsum : 0.1546758823529412
+
 
 ### Sample Summaries
 
