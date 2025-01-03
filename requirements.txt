@@ -4,3 +4,4 @@ datasets
 evaluate
 sentencepiece
 tokenizers
+tf-keras
