@@ -1,5 +1,4 @@
-# Transformers and NLP
-transformers
+
 datasets
 evaluate
 sentencepiece
@@ -7,8 +6,11 @@ tokenizers
 torch
 streamlit
 
-# TensorFlow
-tensorflow
+tensorflow==2.12.0
+keras==2.12.0
+transformers==4.34.0
+
+
 
 # Data Handling and Preprocessing
 pandas
