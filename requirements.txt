@@ -7,17 +7,6 @@ tokenizers
 
 # TensorFlow
 tensorflow
-tensorflow-addons
-
-# PyTorch (if using PyTorch backend as an option)
-torch
-torchvision
-torchaudio
-
-# API and Deployment
-flask
-flask-restful
-gunicorn
 
 # Data Handling and Preprocessing
 pandas
@@ -25,14 +14,7 @@ numpy
 scikit-learn
 nltk
 
-# Visualization
-matplotlib
-
 # Evaluation Metrics
 rouge-score
 sacrebleu
 bert-score
-
-# Additional Utilities
-tqdm
-protobuf
