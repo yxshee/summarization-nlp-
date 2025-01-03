@@ -1,5 +1,5 @@
 tensorflow==2.17.0
-transformers==4.34.0
+transformers
 datasets
 evaluate
 sentencepiece
