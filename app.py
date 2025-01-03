@@ -3,12 +3,14 @@ import tensorflow as tf
 from transformers import TFAutoModelForSeq2SeqLM, AutoTokenizer
 
 # 1. Title and basic instructions for the user.
-st.title("T5 Summarization App")
-st.write("Enter text in Punjabi (or any other language if your model supports it), and get a summarized output!")
+st.image("https://media.giphy.com/media/l2W5P0NgGeR3Iy61q4/giphy.gif?cid=790b76115u2fai7oih0xuedrmgw3sqk72j8y9x3zmjo9cuad&ep=v1_stickers_search&rid=giphy.gif&ct=s", width=269)
+st.title("T5 Summarizer")
+st.write("Enter text and get a summarized output!")
+
 
 # 2. Function to load model and tokenizer.
 @st.cache_resource
-def load_model_and_tokenizer(model_checkpoint: str = "my_t5_summarization/tf_model.h5"):
+def load_model_and_tokenizer(model_checkpoint: str = "yxshee/t5-transformer"):
     """
     Loads the fine-tuned T5 model and tokenizer from a local directory or Hugging Face Hub.
     Replace 'my_t5_summarization' with the path to your model files
@@ -21,7 +23,7 @@ def load_model_and_tokenizer(model_checkpoint: str = "my_t5_summarization/tf_mod
 # 3. Load your previously fine-tuned T5 model (and tokenizer).
 #    If you pushed your model to Hugging Face hub, e.g. "your-username/your-model-id",
 #    replace "my_t5_summarization" with that hub path.
-tokenizer, model = load_model_and_tokenizer("my_t5_summarization")
+tokenizer, model = load_model_and_tokenizer("yxshee/t5-transformer")
 
 # 4. Text input for the user to paste the content that needs summarizing.
 input_text = st.text_area("Paste your text here:", height=200)
