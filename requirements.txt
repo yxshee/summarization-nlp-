@@ -4,6 +4,8 @@ datasets
 evaluate
 sentencepiece
 tokenizers
+torch
+streamlit
 
 # TensorFlow
 tensorflow
