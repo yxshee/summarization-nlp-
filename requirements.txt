@@ -10,15 +10,11 @@ tensorflow==2.12.0
 keras==2.12.0
 transformers==4.34.0
 
-
-
-# Data Handling and Preprocessing
 pandas
 numpy
 scikit-learn
 nltk
 
-# Evaluation Metrics
 rouge-score
 sacrebleu
 bert-score
