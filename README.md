@@ -1,6 +1,8 @@
+
+
 # Summarization NLP
 
-This project is  designed to generate concise and coherent summaries from extensive textual data. Leveraging advanced machine learning algorithms and state-of-the-art deep learning architectures, this project aims to facilitate efficient information digestion, enabling users to grasp key insights swiftly.
+This project is designed to generate concise and coherent summaries from extensive textual data. Leveraging advanced machine learning algorithms and state-of-the-art deep learning architectures, this project aims to facilitate efficient information digestion, enabling users to grasp key insights swiftly.
 
 ---
 
@@ -9,23 +11,14 @@ This project is  designed to generate concise and coherent summaries from extens
 - [Project Overview](#project-overview)
 - [Features](#features)
 - [Dataset Information](#dataset-information)
-  - [Source](#source)
-  - [Structure & Statistics](#structure--statistics)
-  - [Sample Data](#sample-data)
-- [Data Preprocessing](#data-preprocessing)
-  - [Cleaning Steps](#cleaning-steps)
-  - [Text Preprocessing](#text-preprocessing)
 - [Model Architecture](#model-architecture)
   - [Chosen Models](#chosen-models)
   - [Training Strategy](#training-strategy)
 - [Model Evaluation](#model-evaluation)
   - [Performance Metrics](#performance-metrics)
-  - [Evaluation Results](#evaluation-results)
   - [Sample Summaries](#sample-summaries)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Generating Summaries](#generating-summaries)
-  - [API Integration](#api-integration)
 - [Deployment](#deployment)
 - [Future Enhancements](#future-enhancements)
 - [Contributing](#contributing)
@@ -38,13 +31,13 @@ This project is  designed to generate concise and coherent summaries from extens
 
 In the era of information overload, the ability to distill vast amounts of text into succinct summaries is invaluable. **Summarization NLP** addresses this need by providing automated tools to generate high-quality summaries from diverse textual sources, including articles, reports, and social media content. Whether you're a researcher aiming to synthesize literature or a professional seeking quick insights, this project offers reliable and efficient summarization capabilities.
 
+The **fine-tuned T5 model** used in this project is available on [Hugging Face](https://huggingface.co/yxshee/t5-transformer), making it easy to integrate into your NLP workflows.
+
 ---
 
 ## Features
 
-- **Extractive Summarization**: Identifies and extracts key sentences from the original text to form a summary.
 - **Abstractive Summarization**: Generates novel sentences that capture the essence of the input text, mimicking human-like summaries.
-- **Multi-Language Support**: Capable of summarizing texts in multiple languages (future enhancement).
 - **Customizable Summary Length**: Allows users to specify the desired length of the summary.
 - **API Integration**: Offers RESTful APIs for seamless integration into other applications and services.
 - **User-Friendly Interface**: Intuitive web interface for easy access and usage.
@@ -55,19 +48,8 @@ In the era of information overload, the ability to distill vast amounts of text 
 
 ### Source
 
-The datasets utilized in this project are sourced from reputable repositories and include:
+The dataset used for fine-tuning this model is the **[XL-Sum](https://huggingface.co/datasets/csebuetnlp/xlsum)** dataset. XL-Sum is a multilingual summarization dataset that provides professionally written summaries for news articles across 44 languages.
 
-- **CNN/Daily Mail Dataset**: A widely-used dataset for summarization tasks containing news articles and corresponding summaries.
-- **Gigaword Dataset**: A comprehensive collection of newswire text data suitable for training summarization models.
-- **Reddit TIFU Dataset**: Contains Reddit posts with human-written summaries, useful for abstractive summarization.
-
-### Structure & Statistics
-
-- **Total Entries**: Varies per dataset (e.g., CNN/Daily Mail contains ~300K articles).
-- **Features**:
-  - `id`: Unique identifier for each entry.
-  - `article`: The original text to be summarized.
-  - `summary`: The corresponding summary of the article.
 
 #### DataFrame Overview
 
@@ -98,65 +80,6 @@ memory usage: 6.8+ MB
 
 ---
 
-## Data Preprocessing
-
-Effective data preprocessing is fundamental to the success of any NLP project. The following steps were meticulously executed to prepare the data for model training:
-
-### Cleaning Steps
-
-1. **Removal of Irrelevant Columns**:
-   - Dropped columns that do not contribute to the summarization task (e.g., `id`).
-
-2. **Handling Missing Values**:
-   - Ensured there are no missing entries in the `article` and `summary` columns. Entries with missing data were either removed or imputed.
-
-3. **Text Normalization**:
-   - Corrected common misspellings and standardized terminology across the dataset.
-
-**Output:**
-```
-Dropped 'id' column.
-Handled missing values in 'article' and 'summary' columns.
-Performed text normalization.
-```
-
-### Text Preprocessing
-
-1. **Tokenization**:
-   - Split text into tokens (words, punctuation) for easier processing.
-
-2. **Lowercasing**:
-   - Converted all text to lowercase to maintain consistency.
-
-3. **Stop Words Removal**:
-   - Eliminated common stop words that do not contribute meaningful information to the summarization task.
-
-4. **Punctuation Removal**:
-   - Removed unnecessary punctuation to reduce noise.
-
-5. **Lemmatization**:
-   - Reduced words to their base or root form to ensure uniformity.
-
-6. **Handling Rare Words**:
-   - Removed or replaced rare words that may not contribute significantly to the model's understanding.
-
-**Example:**
-
-- **Original Article**:  
-  "In recent news, the stock market has seen significant volatility due to geopolitical tensions."
-
-- **Preprocessed Article**:  
-  "recent news stock market seen significant volatility geopolitical tensions"
-
-**Output:**
-```
-Tokenization completed.
-Converted text to lowercase.
-Removed stop words.
-Eliminated punctuation.
-Performed lemmatization.
-Handled rare words.
-```
 
 ---
 
@@ -164,18 +87,7 @@ Handled rare words.
 
 ### Chosen Models
 
-The project explores both extractive and abstractive summarization techniques to provide comprehensive summarization solutions.
-
-1. **Extractive Summarization Models**:
-   - **TextRank**: An unsupervised graph-based ranking algorithm for keyword and sentence extraction.
-   - **BERTSum**: Utilizes BERT embeddings for enhanced sentence representation and selection.
-
-2. **Abstractive Summarization Models**:
-   - **Seq2Seq with Attention**: A foundational encoder-decoder architecture with attention mechanisms.
-   - **Transformer-Based Models**:
-     - **BART (Bidirectional and Auto-Regressive Transformers)**: Combines bidirectional and autoregressive transformers for robust text generation.
-     - **T5 (Text-To-Text Transfer Transformer)**: A versatile model that treats every NLP problem as a text generation task.
-     - **PEGASUS**: Specifically designed for abstractive summarization tasks with a pre-training objective tailored to summarization.
+This project employs the **T5 (Text-to-Text Transfer Transformer)**, a versatile model that treats every NLP problem as a text generation task. The T5 model has been fine-tuned on the XL-Sum dataset for generating high-quality abstractive summaries.
 
 ### Training Strategy
 
@@ -184,76 +96,22 @@ The project explores both extractive and abstractive summarization techniques to
    - **Validation Set**: 10%
    - **Testing Set**: 10%
 
-2. **Hyperparameter Tuning**:
-   - Conducted grid search and randomized search to identify optimal hyperparameters for each model.
+2. **Optimization Algorithm**:
+   - AdamW optimizer was used for efficient training.
 
-3. **Regularization Techniques**:
-   - Implemented dropout and weight decay to prevent overfitting.
-
-4. **Optimization Algorithms**:
-   - Utilized Adam and AdamW optimizers for efficient training.
-
-5. **Training Frameworks**:
-   - Employed frameworks such as TensorFlow and PyTorch for model implementation and training.
-
-**Output:**
-```
-Completed data splitting into training, validation, and testing sets.
-Performed hyperparameter tuning.
-Applied regularization techniques.
-Selected optimal optimizers.
-Trained models using TensorFlow and PyTorch frameworks.
-```
+3. **Frameworks**:
+   - TensorFlow was used to train the model.
 
 ---
 
 ## Model Evaluation
 
-Comprehensive evaluation ensures the reliability and effectiveness of the summarization models. Various metrics and qualitative assessments were employed to gauge performance.
-
 ### Performance Metrics
 
 1. **ROUGE Scores**:
-   - **ROUGE-1**: Overlap of unigrams between the generated summary and reference summary.
-   - **ROUGE-2**: Overlap of bigrams.
-   - **ROUGE-L**: Longest common subsequence.
-
-2. **BLEU Score**:
-   - Measures the precision of n-grams in the generated summary against reference summaries.
-
-3. **METEOR Score**:
-   - Considers synonymy and stemming to evaluate the quality of the generated summary.
-
-4. **Human Evaluation**:
-   - Conducted surveys where human annotators rated the summaries based on coherence, relevance, and readability.
-
-### Evaluation Results
-
-**Extractive Summarization: TextRank**
-
-- **ROUGE-1**: 0.45
-- **ROUGE-2**: 0.20
-- **ROUGE-L**: 0.40
-- **BLEU**: 0.35
-- **METEOR**: 0.30
-
-**Abstractive Summarization: BART**
-
-- **ROUGE-1**: 0.50
-- **ROUGE-2**: 0.25
-- **ROUGE-L**: 0.45
-- **BLEU**: 0.40
-- **METEOR**: 0.35
-
-**Human Evaluation**
-
-- **Coherence**: 4.5/5
-- **Relevance**: 4.2/5
-- **Readability**: 4.7/5
-
-**Analysis:**
-
-The abstractive models, particularly BART, outperform extractive models across all quantitative metrics. Human evaluations further confirm the superior quality of abstractive summaries in terms of coherence and readability.
+   - **ROUGE-1**: Measures the overlap of unigrams between the generated summary and the reference summary.
+   - **ROUGE-2**: Measures the overlap of bigrams.
+   - **ROUGE-L**: Measures the longest common subsequence between the generated summary and the reference summary.
 
 ### Sample Summaries
 
@@ -261,11 +119,7 @@ The abstractive models, particularly BART, outperform extractive models across a
 
 *"In recent news, the stock market has seen significant volatility due to geopolitical tensions. Investors are concerned about the potential impact on global trade and economic stability. Analysts suggest that diversification and cautious investment strategies are advisable in the current climate."*
 
-**Extractive Summary (TextRank):**
-
-*"The stock market has seen significant volatility due to geopolitical tensions. Investors are concerned about the potential impact on global trade and economic stability."*
-
-**Abstractive Summary (BART):**
+**Generated Summary:**
 
 *"Geopolitical tensions have caused significant volatility in the stock market, raising concerns about global trade and economic stability. Analysts recommend diversification and cautious investment strategies."*
 
@@ -281,44 +135,31 @@ To set up the **Summarization NLP** project locally, follow the steps below:
    cd summarization-nlp
    ```
 
-2. **Create a Virtual Environment (Recommended)**:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install Required Dependencies**:
+2. **Install Required Dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Download Pre-trained Models**:
-   - For transformer-based models like BART and T5, download the pre-trained weights.
-   - Example:
+3. **Download the Fine-Tuned Model**:
+   - The fine-tuned T5 model is available on [Hugging Face](https://huggingface.co/yxshee/t5-transformer). Download the model and tokenizer:
      ```python
-     from transformers import BartTokenizer, BartForConditionalGeneration
+     from transformers import AutoTokenizer, TFAutoModelForSeq2SeqLM
 
-     tokenizer = BartTokenizer.from_pretrained('facebook/bart-large-cnn')
-     model = BartForConditionalGeneration.from_pretrained('facebook/bart-large-cnn')
+     tokenizer = AutoTokenizer.from_pretrained("yxshee/t5-transformer")
+     model = TFAutoModelForSeq2SeqLM.from_pretrained("yxshee/t5-transformer")
      ```
 
-5. **Prepare the Dataset**:
-   - Ensure that the dataset is placed in the `data/` directory.
-   - If using custom datasets, update the `config.py` accordingly.
+4. **Prepare the Dataset**:
+   - If using custom datasets, update the configuration accordingly.
 
-6. **Run Preprocessing Scripts**:
+5. **Run Preprocessing Scripts**:
    ```bash
    python preprocess.py
    ```
 
-7. **Train the Models**:
+6. **Train the Model**:
    ```bash
    python train.py
-   ```
-
-8. **Evaluate the Models**:
-   ```bash
-   python evaluate.py
    ```
 
 ---
@@ -327,196 +168,61 @@ To set up the **Summarization NLP** project locally, follow the steps below:
 
 ### Generating Summaries
 
-You can generate summaries using pre-trained models through scripts or an interactive interface.
+You can generate summaries using the fine-tuned T5 model.
 
-**Using the Command Line Interface (CLI):**
+**Example Using Python**:
 
-```bash
-python generate_summary.py --model bart --input "Your input text here." --length 150
-```
+```python
+from transformers import AutoTokenizer, TFAutoModelForSeq2SeqLM
 
-**Example:**
+# Load the tokenizer and model
+tokenizer = AutoTokenizer.from_pretrained("yxshee/t5-transformer")
+model = TFAutoModelForSeq2SeqLM.from_pretrained("yxshee/t5-transformer")
 
-```bash
-python generate_summary.py --model bart --input "In recent news, the stock market has seen significant volatility due to geopolitical tensions..." --length 100
-```
+# Input text
+text = "In recent news, the stock market has seen significant volatility due to geopolitical tensions..."
 
-**Output:**
+# Tokenize input
+inputs = tokenizer("summarize: " + text, return_tensors="tf", max_length=512, truncation=True)
 
-```
-Geopolitical tensions have caused significant volatility in the stock market, raising concerns about global trade and economic stability. Analysts recommend diversification and cautious investment strategies.
-```
+# Generate summary
+outputs = model.generate(inputs["input_ids"], max_length=100, num_beams=4, early_stopping=True)
 
-### API Integration
-
-The project offers a RESTful API for integrating summarization capabilities into other applications.
-
-**Starting the API Server:**
-
-```bash
-python app.py
-```
-
-**API Endpoint:**
-
-- **URL**: `http://localhost:5000/summarize`
-- **Method**: `POST`
-- **Payload**:
-  ```json
-  {
-    "model": "bart",
-    "text": "Your input text here.",
-    "length": 150
-  }
-  ```
-- **Response**:
-  ```json
-  {
-    "summary": "Generated summary text."
-  }
-  ```
-
-**Example Using `curl`:**
-
-```bash
-curl -X POST http://localhost:5000/summarize \
-     -H "Content-Type: application/json" \
-     -d '{"model": "bart", "text": "In recent news, the stock market has seen significant volatility...", "length": 100}'
-```
-
-**Response:**
-
-```json
-{
-  "summary": "Geopolitical tensions have caused significant volatility in the stock market, raising concerns about global trade and economic stability. Analysts recommend diversification and cautious investment strategies."
-}
+# Decode and print the summary
+print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 ```
 
 ---
 
 ## Deployment
 
-Deploying **Summarization NLP** ensures accessibility and scalability. The following outlines the deployment strategies:
-
-1. **Web Application Deployment**:
-   - Utilize platforms like **Heroku**, **AWS Elastic Beanstalk**, or **Google App Engine** to host the web interface and API.
-   - Ensure that the necessary environment variables and dependencies are configured.
-
-2. **Containerization with Docker**:
-   - Create a `Dockerfile` to containerize the application.
-   - Example `Dockerfile`:
-     ```dockerfile
-     FROM python:3.8-slim
-
-     WORKDIR /app
-
-     COPY requirements.txt .
-     RUN pip install --no-cache-dir -r requirements.txt
-
-     COPY . .
-
-     CMD ["python", "app.py"]
-     ```
-
-   - Build and run the Docker image:
-     ```bash
-     docker build -t summarization-nlp .
-     docker run -p 5000:5000 summarization-nlp
-     ```
-
-3. **Scalability Considerations**:
-   - Implement load balancing and auto-scaling to handle increased traffic.
-   - Utilize cloud services like **AWS Lambda** for serverless deployment if appropriate.
+The fine-tuned T5 model can be deployed as a RESTful API or integrated into existing NLP pipelines. Refer to the detailed deployment instructions in the repository.
 
 ---
 
 ## Future Enhancements
 
-To elevate the capabilities and usability of **Summarization NLP**, the following enhancements are proposed:
-
-1. **Multi-Language Support**:
-   - Extend the summarization functionality to support multiple languages, broadening the tool's applicability.
-
-2. **Real-Time Summarization**:
-   - Optimize models for real-time summarization to enable instantaneous processing of live data streams.
-
-3. **User Personalization**:
-   - Incorporate user preferences to generate customized summaries based on individual interests and requirements.
-
-4. **Integration with Popular Platforms**:
-   - Develop plugins or extensions for platforms like **Slack**, **Microsoft Teams**, and **WordPress** to facilitate seamless summarization within existing workflows.
-
-5. **Enhanced Model Architectures**:
-   - Explore and integrate newer transformer-based models like **GPT-4** and **T5-11B** for improved summarization quality.
-
-6. **Interactive Web Interface**:
-   - Develop a more sophisticated web interface with features like batch processing, history tracking, and user authentication.
-
-7. **Advanced Evaluation Metrics**:
-   - Incorporate additional evaluation metrics such as **BERTScore** and **BLEURT** to provide a more nuanced assessment of summary quality.
-
-8. **Automated Deployment Pipelines**:
-   - Implement continuous integration and continuous deployment (CI/CD) pipelines to streamline updates and maintenance.
+1. **Multi-Language Support**: Extend summarization functionality to other languages.
+2. **Real-Time Summarization**: Optimize the model for real-time summarization tasks.
+3. **Interactive Web Interface**: Develop an enhanced web interface for batch processing and history tracking.
 
 ---
 
 ## Contributing
 
-Contributions are welcome! Whether you're fixing bugs, adding new features, improving documentation, or offering suggestions, your involvement is invaluable to the growth of **Summarization NLP**.
-
-### How to Contribute
-
-1. **Fork the Repository**
-   - Click the "Fork" button at the top-right corner of the repository page.
-
-2. **Clone Your Fork**
-   ```bash
-   git clone https://github.com/your-username/summarization-nlp.git
-   cd summarization-nlp
-   ```
-
-3. **Create a New Branch**
-   ```bash
-   git checkout -b feature/YourFeatureName
-   ```
-
-4. **Make Your Changes**
-   - Implement your feature or bug fix.
-   - Ensure code adheres to the project's coding standards.
-
-5. **Commit Your Changes**
-   ```bash
-   git commit -m "Add feature: YourFeatureName"
-   ```
-
-6. **Push to Your Fork**
-   ```bash
-   git push origin feature/YourFeatureName
-   ```
-
-7. **Open a Pull Request**
-   - Navigate to the original repository.
-   - Click "Compare & pull request" next to your recently pushed branch.
-   - Provide a clear description of your changes and submit the pull request.
-
-### Code of Conduct
-
-Please adhere to the [Code of Conduct](CODE_OF_CONDUCT.md) when contributing to this project.
+Contributions are welcome! Please refer to the contributing guidelines in the repository for more details.
 
 ---
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute this software in accordance with the terms of the license.
+This project is licensed under the MIT License. You are free to use, modify, and distribute this software under the terms of the license.
 
 ---
 
 ## Acknowledgements
 
-- **Hugging Face**: For providing a robust ecosystem of transformer models and tools.
-- **TensorFlow & PyTorch Communities**: For their comprehensive frameworks that power the development and training of NLP models.
-- **Kaggle**: For hosting invaluable datasets that serve as the foundation for training summarization models.
-- **OpenAI**: For pioneering advancements in NLP and transformer-based architectures.
-- **The Open-Source Community**: For continuous contributions and support that drive innovation in the field of NLP.
+- **Hugging Face**: For providing the T5 model and the XL-Sum dataset.
+- **TensorFlow**: For enabling efficient model training and deployment.
 
----
+--- 
