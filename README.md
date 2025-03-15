@@ -58,9 +58,6 @@ Dataset({
 })
 ```
 
-### 🌍 Language Distribution
-![Language Distribution](https://via.placeholder.com/600x200.png?text=44+Languages+Supported+-+English+%7C+French+%7C+Spanish+%7C+...)
-
 ### 📝 Sample Data
 | Article Excerpt | Generated Summary |
 |-----------------|-------------------|
