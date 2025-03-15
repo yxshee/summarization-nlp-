@@ -8,7 +8,6 @@
 
 > **"From Information Overload to Insightful Clarity"** ✨
 
----
 
 ## 🌟 Features
 
@@ -216,5 +215,5 @@ This project is licensed under the **[MIT License](LICENSE)** - see the [LICENSE
 ---
 
 <div align="center">
-  Made with ❤️ by NLP Enthusiasts | 📚 Transform Text into Knowledge!
+  Made with ❤️ by YXSHEE | 📚 Transform Text into Knowledge!
 </div>
