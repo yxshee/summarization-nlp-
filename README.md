@@ -91,12 +91,12 @@ graph TD
 ## 📈 Performance Evaluation
 
 ### 📊 ROUGE Scores
-| Metric     | Score   | Visual               |
-|------------|---------|----------------------|
-| **ROUGE-1** | 0.238   | 🟢🟢🟢🟢🟢🟢          |
-| **ROUGE-2** | 0.056   | 🟡🟡                 |
-| **ROUGE-L** | 0.122   | 🟠🟠🟠               |
-| **ROUGE-Lsum** | 0.155 | 🔵🔵🔵              |
+| Metric     | Score   | 
+|------------|---------|
+| **ROUGE-1** | 0.238   |   
+| **ROUGE-2** | 0.056   | 
+| **ROUGE-L** | 0.122   | 
+| **ROUGE-Lsum** | 0.155 | 
 
 ### 🔍 Sample Comparison
 **Input:**  
