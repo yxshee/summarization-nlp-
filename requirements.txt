@@ -1,0 +1,24 @@
+# Working requirements for the T5 Summarization project
+# Updated to use PyTorch instead of TensorFlow
+
+# Core ML libraries
+torch>=2.8.0
+transformers>=4.55.0
+datasets>=4.0.0
+evaluate>=0.4.5
+
+# Tokenization
+sentencepiece>=0.2.1
+tokenizers>=0.21.0
+
+# Evaluation metrics
+rouge_score>=0.1.2
+
+# Web app
+streamlit>=1.48.0
+
+# Additional utilities
+numpy>=2.0.0
+pandas>=2.0.0
+tqdm>=4.60.0
+pyyaml>=6.0.0
