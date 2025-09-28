@@ -1,72 +1,121 @@
+"""
+T5 Summarization Web App
+Streamlit-based interface for text summarization using T5.
+"""
+
 import streamlit as st
+import torch
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
-# 1. Title and basic instructions for the user.
-st.image("https://media.giphy.com/media/l2W5P0NgGeR3Iy61q4/giphy.gif?cid=790b76115u2fai7oih0xuedrmgw3sqk72j8y9x3zmjo9cuad&ep=v1_stickers_search&rid=giphy.gif&ct=s", width=269)
-st.title("T5 Summarizer")
-st.write("Enter text and get a summarized output!")
+# Page configuration
+st.set_page_config(
+    page_title="T5 Summarizer",
+    page_icon="📝",
+    layout="centered",
+)
 
-# 2. Function to load model and tokenizer.
+# Constants
+MODEL_CHECKPOINT = "t5-small"
+PREFIX = "summarize: "
+
+
+def get_device():
+    """Get the best available device."""
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    elif torch.backends.mps.is_available():
+        return torch.device("mps")
+    return torch.device("cpu")
+
+
 @st.cache_resource
-def load_model_and_tokenizer(model_checkpoint: str = "t5-small"):
-    """
-    Loads the T5 model and tokenizer from Hugging Face Hub.
-    Using t5-small as default since the custom model may not be available.
-    """
+def load_model():
+    """Load the T5 model and tokenizer."""
     try:
-        tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
-        model = AutoModelForSeq2SeqLM.from_pretrained(model_checkpoint)
-        return tokenizer, model
+        tokenizer = AutoTokenizer.from_pretrained(MODEL_CHECKPOINT)
+        model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_CHECKPOINT)
+        device = get_device()
+        model.to(device)
+        return tokenizer, model, device
     except Exception as e:
         st.error(f"Error loading model: {e}")
-        return None, None
+        return None, None, None
 
-# 3. Load the T5 model
-with st.spinner("Loading model..."):
-    tokenizer, model = load_model_and_tokenizer()
 
-if tokenizer is None or model is None:
-    st.error("Failed to load model. Please check your internet connection.")
-    st.stop()
+def generate_summary(text: str, tokenizer, model, device, max_length: int, num_beams: int) -> str:
+    """Generate summary for the given text."""
+    full_input = PREFIX + text
+    
+    inputs = tokenizer(
+        full_input,
+        return_tensors="pt",
+        max_length=1024,
+        truncation=True,
+    ).to(device)
+    
+    summary_ids = model.generate(
+        **inputs,
+        max_length=max_length,
+        num_beams=num_beams,
+        no_repeat_ngram_size=2,
+        early_stopping=True,
+    )
+    
+    return tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
-# 4. Text input for the user to paste the content that needs summarizing.
-input_text = st.text_area("Paste your text here:", height=200)
 
-# 5. Summarize button
-if st.button("Summarize"):
-    if len(input_text.strip()) == 0:
-        st.warning("Please enter some text to summarize.")
-    else:
-        with st.spinner("Generating summary..."):
-            try:
-                # 6. Prepend the prefix "summarize: " for T5-based summarization.
-                prefix = "summarize: "
-                full_input = prefix + input_text
+def main():
+    # Header
+    st.image(
+        "https://media.giphy.com/media/l2W5P0NgGeR3Iy61q4/giphy.gif",
+        width=150,
+    )
+    st.title("📝 T5 Summarizer")
+    st.write("Enter text and get a concise summary powered by T5!")
+    
+    # Load model
+    with st.spinner("Loading model..."):
+        tokenizer, model, device = load_model()
+    
+    if tokenizer is None or model is None:
+        st.error("Failed to load model. Please check your internet connection.")
+        st.stop()
+    
+    st.success(f"Model loaded on: {device}")
+    
+    # Sidebar settings
+    st.sidebar.header("⚙️ Settings")
+    max_length = st.sidebar.slider("Max summary length", 32, 256, 128)
+    num_beams = st.sidebar.slider("Beam search width", 1, 8, 4)
+    
+    # Text input
+    input_text = st.text_area(
+        "Paste your text here:",
+        height=200,
+        placeholder="Enter the text you want to summarize...",
+    )
+    
+    # Summarize button
+    if st.button("🚀 Summarize", type="primary"):
+        if not input_text.strip():
+            st.warning("Please enter some text to summarize.")
+        else:
+            with st.spinner("Generating summary..."):
+                try:
+                    summary = generate_summary(
+                        input_text, tokenizer, model, device, max_length, num_beams
+                    )
+                    st.subheader("📋 Summary")
+                    st.write(summary)
+                    
+                    # Show stats
+                    st.caption(
+                        f"Input: {len(input_text.split())} words → "
+                        f"Summary: {len(summary.split())} words"
+                    )
+                except Exception as e:
+                    st.error(f"Error generating summary: {e}")
 
-                # 7. Tokenize
-                inputs = tokenizer(
-                    full_input,
-                    return_tensors="pt",
-                    max_length=1024,
-                    truncation=True
-                )
 
-                # 8. Generate summary (customize generation parameters as you see fit).
-                summary_ids = model.generate(
-                    **inputs,
-                    max_length=128,
-                    num_beams=4,
-                    no_repeat_ngram_size=2,
-                    early_stopping=True
-                )
-
-                # 9. Decode summary output
-                summarized_text = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-
-                # 10. Display the summary
-                st.subheader("Summary")
-                st.write(summarized_text)
-                
-            except Exception as e:
-                st.error(f"Error generating summary: {e}")
-                st.info("Make sure the input text is not too long and contains meaningful content.")
+if __name__ == "__main__":
+    main()

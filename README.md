@@ -4,10 +4,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-🤗-yellow)](https://huggingface.co/yxshee/t5-transformer)
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.8+-FF6F00?logo=tensorflow)](https://www.tensorflow.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-EE4C2C?logo=pytorch)](https://pytorch.org/)
 
 > **"From Information Overload to Insightful Clarity"** ✨
 
+![Demo](assets/t5_summarizer_demo_1768472794023.webp)
 
 ## 🌟 Features
 
@@ -130,10 +131,10 @@ source .env/bin/activate  # Windows: .env\Scripts\activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Download model
-python -c "from transformers import T5Tokenizer, TFT5ForConditionalGeneration; \
-T5Tokenizer.from_pretrained('yxshee/t5-transformer'); \
-TFT5ForConditionalGeneration.from_pretrained('yxshee/t5-transformer')"
+# Download model (optional - will auto-download on first run)
+python -c "from transformers import AutoTokenizer, AutoModelForSeq2SeqLM; \
+AutoTokenizer.from_pretrained('t5-small'); \
+AutoModelForSeq2SeqLM.from_pretrained('t5-small')"
 ```
 
 ---
@@ -168,12 +169,12 @@ python cli.py --text "Your input text here" --length 100
 
 ### 🐳 Docker Deployment
 ```dockerfile
-FROM tensorflow/tensorflow:2.8.0
+FROM python:3.10-slim
 COPY . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
-EXPOSE 5000
-CMD ["python", "api_server.py"]
+EXPOSE 8501
+CMD ["streamlit", "run", "code/app.py", "--server.port=8501"]
 ```
 
 ### ☁️ Cloud Deployment
